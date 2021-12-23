@@ -323,19 +323,23 @@ const App = () => {
 
   const mintNft = () => {
     setIsClaiming(true);
+    let err = false;
 
     bundleDropModule
       .claim("0", 1)
       .catch((error) => {
         console.error("failed to claim", error);
         setIsClaiming(false);
+        err = true;
       })
       .finally(() => {
-        setIsClaiming(false);
-        setHasClaimedNFT(true);
-        console.log(
-          `🌊 Successfully Minted! Check it out on OpenSea: https://testnets.opensea.io/assets/${bundleDropModule.address}/0`
-        );
+        if (!err) {
+          setIsClaiming(false);
+          setHasClaimedNFT(true);
+          console.log(
+            `🌊 Successfully Minted! Check it out on OpenSea: https://testnets.opensea.io/assets/${bundleDropModule.address}/0`
+          );
+        }
       });
   };
 
